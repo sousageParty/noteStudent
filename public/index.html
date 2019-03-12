@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>NFC project</title>
+
+    <link rel="stylesheet" href="css/main.css">
+
+    <!--vendor-->
+    <script src="js/vendor/jquery-3.3.1.min.js"></script>
+    <!--settings-->
+    <script src="js/settings.js"></script>
+    <!--server-->
+    <script src="js/server/server.js"></script>
+    <!--login/registration-->
+    <script src="js/login/login.js"></script>
+    <script src="js/registration/registration.js"></script>
+    <!--main-->
+    <script src="js/main/ui.js"></script>
+    <script src="js/main/mainManager.js"></script>
+    <script src="js/main.js"></script>
+</head>
+<body>
+    <div class="main-block">
+        <header class="main-block__header">
+            <button class="main-block__logout-button main-block__logout-button-js">Выйти</button>
+        </header>
+    </div>
+
+    <div class="auth-reg-block">
+        <div class="auth-reg-block__auth">
+            <h1 class="auth-reg-block__title"></h1>
+            <input class="auth-reg-block__input auth-reg-block__input-login-js" type="text" placeholder="Введите ваш логин">
+            <input class="auth-reg-block__input auth-reg-block__input-password-js" type="password" placeholder="Введите ваш пароль">
+            <button class="auth-reg-block__button auth-reg-block__button-login-js">Войти</button>
+            <p class="auth-reg-block__error auth-reg-block__error-login-js"></p>
+        </div>
+        <div class="auth-reg-block__reg">
+            <h1 class="auth-reg-block__title"></h1>
+            <input class="auth-reg-block__input auth-reg-block__reg__input-login-js" type="text" placeholder="Введите ваш логин">
+            <input class="auth-reg-block__input auth-reg-block__reg__input-name-js" type="text" placeholder="Введите ФИО">
+            <select class="auth-reg-block__select auth-reg-block__select-js"></select>
+            <input class="auth-reg-block__input auth-reg-block__reg__input-password-js" type="password" placeholder="Введите ваш пароль">
+            <input class="auth-reg-block__input auth-reg-block__reg__input-password-js" type="password" placeholder="Введите ваш пароль еще раз">
+            <button class="auth-reg-block__button auth-reg-block__reg__button-js">Зарегистрироваться</button>
+            <p class="auth-reg-block__error auth-reg-block__error-reg-js"></p>
+        </div>
+        <div class="auth-reg-block__auth-reg-choice-block">
+            <button id="go-to-reg-button" class="auth-reg-block__transition">Еще не зарегистрированы? Сделайте это!</button>
+            <button id="go-to-auth-button" class="auth-reg-block__transition">Вернуться к авторизации</button>
+        </div>
+    </div>
+</body>
+</html>
