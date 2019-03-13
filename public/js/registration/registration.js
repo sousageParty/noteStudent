@@ -26,10 +26,11 @@ function Registration(options) {
         const group = $('.auth-reg-block__select-js').val();
         if (login && password1 && password2 && longName && longName.length >= 2 && group) {
             if (password1 === password2) {
+                const password = md5(login + password1);
                 const surname = longName[0];
                 const name = longName[1];
                 const thirdname = longName[2];
-                const result = await server.registration({ login, password: password1, group, name, surname, thirdname, type: 0 });
+                const result = await server.registration({ login, password, group, name, surname, thirdname, type: 0 });
                 if (result.result === "ok") {
                     loginField.val('');
                     nameField.val('');
@@ -37,7 +38,7 @@ function Registration(options) {
                     showPage(PAGES.LOGIN);
                     return;
                 }
-                $('.auth-reg-block__error-reg-js').empty().append(result.error);
+                $('.auth-reg-block__error-reg-js').empty().append("Пользователь с таким логином уже существует");
                 return;
             }
             $('.auth-reg-block__error-reg-js').empty().append("Пароли не совпадают");

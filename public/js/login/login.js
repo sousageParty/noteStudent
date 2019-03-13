@@ -21,9 +21,11 @@ function Login(options) {
         const loginField = $('.auth-reg-block__input-login-js');
         const passwordField = $('.auth-reg-block__input-password-js');
         const login = loginField.val();
-        const password = passwordField.val();
+        let password = passwordField.val();
         if (login && password) {
-            const result = await server.login({login, password});
+            const rnd = Math.random();
+            password = md5(md5(login + password) + rnd);
+            const result = await server.login({login, password, rnd});
             if (result.result === 'ok') {
                 server.token = result.data;
                 loginField.val('');

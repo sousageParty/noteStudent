@@ -1,16 +1,16 @@
 class Mediator:
-    TYPES = {}  # типы событий
+    EVENTS = {}  # типы событий
     events = {}  # списки событий
-    TRIGGER_TYPES = {}  # типы событий
+    TRIGGERS = {}  # типы триггеров
     triggers = {}  # список триггеров
 
     def __init__(self, types):
-        self.TYPES = types['EVENTS']
-        self.TRIGGER_TYPES = types['TRIGGERS']
-        for key in self.TYPES.keys():
-            self.events.update({self.TYPES[key]: []})
-        for key in self.TRIGGER_TYPES.keys():
-            self.triggers.update({self.TRIGGER_TYPES[key]: lambda x=None: None})
+        self.EVENTS = types['EVENTS']
+        self.TRIGGERS = types['TRIGGERS']
+        for key in self.EVENTS.keys():
+            self.events.update({self.EVENTS[key]: []})
+        for key in self.TRIGGERS.keys():
+            self.triggers.update({self.TRIGGERS[key]: lambda x=None: None})
 
     def __del__(self):
         self.events.clear()
@@ -20,8 +20,8 @@ class Mediator:
         if name and func:
             self.events.get(name).append(func)
 
-    def getTypes(self):
-        return self.TYPES
+    def getEvents(self):
+        return self.EVENTS
 
     # выозов события
     def call(self, name, data=None):
@@ -31,8 +31,8 @@ class Mediator:
                 for cb in cbs:
                     cb(data)
 
-    def getTriggerTypes(self):
-        return self.TRIGGER_TYPES
+    def getTriggers(self):
+        return self.TRIGGERS
 
     # Установить Триггер
     def set(self, name, func):

@@ -10,7 +10,7 @@ class Router:
     @staticmethod
     def checkParams(method, data):
         if method == 'addUser':
-            if 'login' in data.keys() and 'password' in data.keys() and 'group' in data.keys() and 'type' in data.keys() and 'name' in data.keys() and 'surname' in data.keys() and 'thirdname' in data.keys():
+            if 'login' in data.keys() and 'password' in data.keys() and 'group' in data.keys() and 'type' in data.keys() and 'name' in data.keys() and 'surname' in data.keys():
                 return True
             return False
         return False
@@ -19,8 +19,8 @@ class Router:
         self.web = web
         self.api = ApiAnswer()
         self.mediator = mediator
-        self.TYPES = mediator.getTypes()
-        self.TRIGGERS = mediator.getTriggerTypes()
+        self.TYPES = mediator.getEvents()
+        self.TRIGGERS = mediator.getTriggers()
         routes = [
             ('*', '/', self.staticHandler),
             # О юзерах
@@ -63,7 +63,8 @@ class Router:
     def login(self, request):
         login = request.match_info.get('login')
         password = request.match_info.get('password')
-        result = self.mediator.get(self.TRIGGERS['LOGIN'], {'login': login, 'password': password})
+        rnd = request.rel_url.query['rnd']
+        result = self.mediator.get(self.TRIGGERS['LOGIN'], {'login': login, 'password': password, 'rnd': rnd})
         if result:
             return self.web.json_response(self.api.answer(result))
         return self.web.json_response(self.api.error(2010))

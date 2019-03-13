@@ -42,8 +42,11 @@ class DB:
 
     def addUser(self, data):
         query = 'INSERT INTO users (login, password) VALUES (:login, :password)'
-        self.c.execute(query, {'login': data['login'], 'password': data['password']})
-        self.conn.commit()
+        try:
+            self.c.execute(query, {'login': data['login'], 'password': data['password']})
+            self.conn.commit()
+        except sqlite3.IntegrityError:
+            return False
         user = self.getUserByLogin(data['login'])
         return user
 

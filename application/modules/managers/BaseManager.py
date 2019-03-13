@@ -7,5 +7,5 @@ class BaseManager:
     def __init__(self, params):
         self.mediator = params['mediator']
         self.db = params['db']
-        self.TRIGGERS = self.mediator.getTriggerTypes()
-        self.EVENTS = self.mediator.getTypes()
+        self.TRIGGERS = self.mediator.getTriggers()
+        self.EVENTS = self.mediator.getEvents()

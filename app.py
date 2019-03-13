@@ -15,6 +15,11 @@ UserManager({'mediator': mediator, 'db': db})
 StudentManager({'mediator': mediator, 'db': db})
 GroupManager({'mediator': mediator, 'db': db})
 
+# Users in DB (login <=> password):
+# vasya <=> 123
+# petya <=> 321
+# ivan <=> 213
+# katya <=> 1234
 
 app = web.Application()
 Router(app, web, mediator)
