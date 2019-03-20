@@ -1,3 +1,8 @@
+/**
+ * Конструктор для инкапсуляции логики входа в систему
+ * @param options параметры с которыми вызывается конструктор
+ */
+
 function Login(options) {
 
     options = options instanceof Object ? options : {};
@@ -8,6 +13,10 @@ function Login(options) {
 
     const server = options.server;
 
+    /**
+     * Заполняем выпадашку с группами
+     * @param groups массив групп, которыми нужно заполнить выпадашку
+     */
     function fillGroups(groups) {
         const select = $('.auth-reg-block__select-js');
         select.empty();
@@ -16,7 +25,10 @@ function Login(options) {
         }
     }
 
-    //Функция логина
+    /**
+     * Функция входа в сиситему
+     * @param e событие клика на кнопку
+     */
     async function login(e) {
         const loginField = $('.auth-reg-block__input-login-js');
         const passwordField = $('.auth-reg-block__input-password-js');
@@ -39,10 +51,15 @@ function Login(options) {
         $('.auth-reg-block__error-login-js').empty().append("Не введен логин и(или) пароль!");
     }
 
-    //Вешаем все события, касающиеся логина здесь
+    /**
+     * Функция-обработчик всех событий, касающихся Login-а
+     */
     function eventHandler() {
         $('.auth-reg-block__button-login-js').on('click', login);
 
+        /**
+         * Вешаем событие на кнопку "перейти к регистрации" и обрабатываем его
+         */
         $SELECTORS.toRegBtn.on('click', async e => {
             const result = await server.getGroupsCodes();
             fillGroups(result.data);
@@ -50,6 +67,9 @@ function Login(options) {
         });
     }
 
+    /**
+     * Функция-инициализатор компонента
+     */
     function init() {
         eventHandler();
     }

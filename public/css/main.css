@@ -49,6 +49,16 @@ h1 {
     outline: none;
 }
 
+
+.auth-reg-block__input::-webkit-input-placeholder       {opacity: 1; transition: opacity 0.3s ease;}
+.auth-reg-block__input::-moz-placeholder                {opacity: 1; transition: opacity 0.3s ease;}
+.auth-reg-block__input:-moz-placeholder                 {opacity: 1; transition: opacity 0.3s ease;}
+.auth-reg-block__input:-ms-input-placeholder            {opacity: 1; transition: opacity 0.3s ease;}
+.auth-reg-block__input:focus::-webkit-input-placeholder {opacity: 0; transition: opacity 0.3s ease;}
+.auth-reg-block__input:focus::-moz-placeholder          {opacity: 0; transition: opacity 0.3s ease;}
+.auth-reg-block__input:focus:-moz-placeholder           {opacity: 0; transition: opacity 0.3s ease;}
+.auth-reg-block__input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s ease;}
+
 .auth-reg-block__button {
     border: 1px solid #d5d5d5;
     height: 40px;
@@ -83,7 +93,11 @@ h1 {
     border-radius: 25px;
     margin: 10px 0;
     outline: none;
+    text-align-last: center;
+    text-align: center
 }
+
+
 
 .auth-reg-block__transition {
     border: 1px solid #d5d5d5;

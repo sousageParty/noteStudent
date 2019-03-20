@@ -1,12 +1,23 @@
+/**
+ * Компонент для отправки запросов на сервер и получения ответов
+ */
 class Server {
 
+    /**
+     * Функция-конструктор компонента
+     * @param options начальные параметры, с которыми вызывается конструктор
+     */
     constructor(options) {
         this.options = options instanceof Object ? options : {};
         this.url = options.URL;
         this.token = null;
     }
 
-    //Выполнить любой GET-запрос
+    /**
+     * Метод, выполняющий любой GET-запрос на сервер
+     * @param data данные, с которыми нужно выполнить этот запрос
+     * @returns {Promise<any>} результат выполнения запроса
+     */
     executeGet(data) {
         return new Promise(resolve => {
             $.ajax({
@@ -19,7 +30,11 @@ class Server {
         });
     }
 
-    //Выполнить любой POST-запрос
+    /**
+     * Метод, выполняющий любой POST-запрос на сервер
+     * @param data данные, с которыми нужно выполнить этот запрос
+     * @returns {Promise<any>} результат выполнения запроса
+     */
     executePost(data) {
         return new Promise(resolve => {
             $.ajax({
@@ -32,21 +47,41 @@ class Server {
         });
     }
 
+    /**
+     * Метод отправки запроса login на сервер
+     * @param data данные с которыми нужно отправить запрос
+     * @returns {Promise<any>} результат запроса
+     */
     login(data = {}) {
         data.url = `user/login/${data.login}/${data.password}`;
         return this.executeGet(data);
     }
 
+    /**
+     * Метод отправки запроса logout на сервер
+     * @param data данные с которыми нужно отправить запрос
+     * @returns {Promise<any>} результат запроса
+     */
     logout(data = {}) {
         data.url = `user/logout/${this.token}`;
         return this.executeGet(data);
     }
 
+    /**
+     * Метод отправки запроса registration на сервер
+     * @param data данные с которыми нужно отправить запрос
+     * @returns {Promise<any>} результат запроса
+     */
     registration(data = {}) {
         data.url = 'user';
         return this.executePost(data);
     }
 
+    /**
+     * Метод отправки запроса getGroupsCodes на сервер
+     * @param data данные с которыми нужно отправить запрос
+     * @returns {Promise<any>} результат запроса
+     */
     getGroupsCodes(data = {}) {
         data.url = 'group/codes';
         return this.executeGet(data);

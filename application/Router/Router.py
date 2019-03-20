@@ -1,6 +1,7 @@
 from .ApiAnswer import ApiAnswer
 
 
+# Класс для описасния API методов и их обработчиков
 class Router:
 
     web = None
@@ -10,7 +11,7 @@ class Router:
     @staticmethod
     def checkParams(method, data):
         if method == 'addUser':
-            if 'login' in data.keys() and 'password' in data.keys() and 'group' in data.keys() and 'type' in data.keys() and 'name' in data.keys() and 'surname' in data.keys():
+            if 'login' in data.keys() and 'password' in data.keys() and 'group' in data.keys() and 'type' in data.keys() and 'name':
                 return True
             return False
         return False
@@ -26,7 +27,7 @@ class Router:
             # О юзерах
             ('GET', "/api/user", self.getUsers),  # Получить всех юзеров
             ('GET', "/api/user/{login}", self.getUser),  # Получить юзера по ИД
-            ('POST', "/api/user", self.addUser),  # Добавить юзера и студента одновременно
+            ('POST', "/api/user", self.register),  # Добавить юзера и студента одновременно
             ('GET', "/api/user/login/{login}/{password}", self.login),  # Логин юзера
             ('GET', "/api/user/logout/{token}", self.logout),  # Выход юзера
             # О группах
@@ -51,7 +52,7 @@ class Router:
             return self.web.json_response(self.api.answer(result))
         return self.web.json_response(self.api.error(404))
 
-    async def addUser(self, request):
+    async def register(self, request):
         data = await request.json()
         if self.checkParams('addUser', data):
             result = self.mediator.get(self.TRIGGERS['SET_USER'], data)

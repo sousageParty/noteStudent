@@ -1,3 +1,7 @@
+/**
+ * Основной компонент клиента приложения.
+ * Отправная точка
+ */
 $(document).ready(function () {
 
     const PAGES = SETTINGS.PAGES;
@@ -8,6 +12,10 @@ $(document).ready(function () {
         'toLoginBtn': $('#go-to-auth-button'), 'toRegBtn': $('#go-to-reg-button'), 'loginRegContainer': $('.auth-reg-block')
     };
 
+    /**
+     * Метод показывающий нужную страницу по запросу
+     * @param page страница, которую нужно показать
+     */
     function showPage(page) {
         $SELECTORS.mainBlock.hide();
         $SELECTORS.regBlock.hide();
@@ -36,6 +44,6 @@ $(document).ready(function () {
     new Registration({ ...SETTINGS, $SELECTORS, showPage, server });
     new Login({ ...SETTINGS, $SELECTORS, showPage, server });
     new MainManager({ ...SETTINGS, $SELECTORS, showPage, server });
-    showPage(PAGES.LOGIN);
 
+    showPage(PAGES.LOGIN);
 });

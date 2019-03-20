@@ -1,3 +1,7 @@
+/**
+ * Конструктор для инкапсуляции основных событий клиента приложения
+ * @param options параметры с которыми вызывается конструктор
+ */
 function UI(options) {
 
     options = options instanceof Object ? options : {};
@@ -7,7 +11,9 @@ function UI(options) {
     const showPage = options.showPage instanceof Function ? options.showPage : () => {};
     const server = options.server;
 
-    //Вешаем все события, касающиеся основного экрана здесь
+    /**
+     * Функция-обработчик основных событий клиента
+     */
     function eventHandler() {
         $('.main-block__logout-button-js').on('click', async e => {
             const result = await server.logout();
@@ -17,6 +23,9 @@ function UI(options) {
         });
     }
 
+    /**
+     * Функция-инициализатор компонента
+     */
     function init() {
         eventHandler();
     }
