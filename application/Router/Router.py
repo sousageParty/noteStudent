@@ -28,10 +28,13 @@ class Router:
             ('GET', "/api/user", self.getUsers),  # Получить всех юзеров
             ('GET', "/api/user/{login}", self.getUser),  # Получить юзера по ИД
             ('POST', "/api/user", self.register),  # Добавить юзера и студента одновременно
-            ('GET', "/api/user/login/{login}/{password}", self.login),  # Логин юзера
+            ('GET', "/api/user/login/{login}/{password}/{rnd}", self.login),  # Логин юзера
             ('GET', "/api/user/logout/{token}", self.logout),  # Выход юзера
             # О группах
-            ('GET', '/api/group/codes', self.getGroupsCodes)  # Получить коды групп
+            ('GET', '/api/group/codes', self.getGroupsCodes),  # Получить коды групп
+            # О студентах
+            ('GET', '/api/student/note/{tokenAdmin}/{tokenStudent}', self.noteStudent),  # Отметить студентов
+            ('GET', '/api/student/getOnLesson/{tokenAdmin}/{date}/{lessonNum}', self.getStudentsOnLesson)  # Получить список студентов, бывших на конкретной паре, конкретного дня
         ]
         app.router.add_static('/img/', path=str('./public/img/'))
         app.router.add_static('/css/', path=str('./public/css/'))
@@ -64,7 +67,7 @@ class Router:
     def login(self, request):
         login = request.match_info.get('login')
         password = request.match_info.get('password')
-        rnd = request.rel_url.query['rnd']
+        rnd = request.match_info.get('rnd')
         result = self.mediator.get(self.TRIGGERS['LOGIN'], {'login': login, 'password': password, 'rnd': rnd})
         if result:
             return self.web.json_response(self.api.answer(result))
@@ -79,3 +82,20 @@ class Router:
 
     def getGroupsCodes(self, request):
         return self.web.json_response(self.api.answer(self.mediator.get(self.TRIGGERS['GET_GROUPS_CODES'])))
+
+    def noteStudent(self, request):
+        tokenAdmin = request.match_info.get('tokenAdmin')
+        tokenStudent = request.match_info.get('tokenStudent')
+        result = self.mediator.get(self.TRIGGERS['NOTE_STUDENT'], {'tokenAdmin': tokenAdmin, 'tokenStudent': tokenStudent})
+        if result:
+            return self.web.json_response(self.api.answer(result))
+        return self.web.json_response(self.api.error(3010))
+
+    def getStudentsOnLesson(self, request):
+        tokenAdmin = request.match_info.get('tokenAdmin')
+        date = request.match_info.get('date')
+        lessonNum = request.match_info.get('lessonNum')
+        result = self.mediator.get(self.TRIGGERS['GET_STUDENTS_ON_LESSON'], {'tokenAdmin': tokenAdmin, 'date': date, 'lessonNum': lessonNum})
+        if result or result == []:
+            return self.web.json_response(self.api.answer(result))
+        return self.web.json_response(self.api.error(3020))

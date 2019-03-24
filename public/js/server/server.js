@@ -53,7 +53,7 @@ class Server {
      * @returns {Promise<any>} результат запроса
      */
     login(data = {}) {
-        data.url = `user/login/${data.login}/${data.password}`;
+        data.url = `user/login/${data.login}/${data.password}/${data.rnd}`;
         return this.executeGet(data);
     }
 

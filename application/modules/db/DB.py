@@ -59,7 +59,59 @@ class DB:
         self.conn.commit()
         return True
 
+    def getStudentByToken(self, token):
+        query = "SELECT " \
+                 "student.id AS student_id, student.group_id AS group_id, student.type AS type, " \
+                 "user.id AS id, user.login AS login, user.password AS password, user.name AS name, user.token AS token " \
+                "FROM student JOIN user ON (student.user_id = user.id) " \
+                "WHERE user.token = :token"
+        self.c.execute(query, { 'token': token })
+        return self.c.fetchone()
+
     def getGroupsCodes(self):
         query = "SELECT code FROM 'group'"
         self.c.execute(query)
+        return self.c.fetchall()
+
+    def getCurrentLesson(self):
+        query = "SELECT * FROM lesson_time WHERE time_start < time('now', 'localtime') AND time('now', 'localtime') < time_finish"
+        self.c.execute(query)
+        return self.c.fetchone()
+
+    def noteStudent(self, adminId, studentId, lessonId):
+        query = "INSERT INTO " \
+                 "student_on_lessons (admin_id, students_id, lesson_time_id, date, time) " \
+                "VALUES (:adminId, :studentId, :lessonId, date('now', 'localtime'), time('now', 'localtime'))"
+        self.c.execute(query, {"adminId": adminId, "studentId": studentId, "lessonId": lessonId})
+        self.conn.commit()
+        return True
+
+    def getLessonByNum(self, lessonNum):
+        query = "SELECT * FROM lesson_time WHERE num_lesson = :lessonNum"
+        self.c.execute(query, { "lessonNum": lessonNum })
+        return self.c.fetchone()
+
+    def getStudentOnLesson(self, studentId, lessonId):
+        query = "SELECT * " \
+                "FROM student_on_lessons " \
+                "WHERE students_id = :studentId " \
+                 "AND lesson_time_id = :lessonId " \
+                 "AND student_on_lessons.date = date('now', 'localtime')"
+        self.c.execute(query, { "studentId": studentId, "lessonId": lessonId })
+        return self.c.fetchone()
+
+    def getStudentsOnLesson(self, adminId, date, lessonId):
+        query = "SELECT " \
+                  "student_on_lessons.date AS date, student_on_lessons.time AS time, " \
+                  "lesson_time.num_lesson AS lessonNum, lesson_time.time_start AS timeStart, lesson_time.time_finish AS timeFinish, " \
+                  "student.type AS type, user.id AS userId, user.name AS name, 'group'.short_name AS shortName " \
+                "FROM student_on_lessons " \
+                  "JOIN lesson_time ON (student_on_lessons.lesson_time_id = lesson_time.id) " \
+                  "JOIN user ON (user.id = student_on_lessons.students_id) " \
+                  "JOIN student ON (student.user_id = user.id) " \
+                  "JOIN 'group' ON ('group'.id = student.group_id) " \
+                "WHERE student_on_lessons.date = date('now', 'localtime') " \
+                  "AND student_on_lessons.admin_id = :adminId " \
+                  "AND student_on_lessons.lesson_time_id = :lessonId;"
+        self.c.execute(query, { "adminId": adminId, "date": date, 'lessonId': lessonId })
         return self.c.fetchall()
