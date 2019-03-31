@@ -28,5 +28,10 @@ SETTINGS = {
             # О группах
             'GET_GROUPS_CODES': 'GET_GROUPS_CODES',
         }
+    },
+    # О сокетах
+    'SOCKET_EVENTS': {
+        'START_CONNECTION': 'START_CONNECTION',
+        'TEST_MESSAGE': 'TEST_MESSAGE'
     }
 }

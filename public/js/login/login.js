@@ -10,8 +10,10 @@ function Login(options) {
     const $SELECTORS = options.$SELECTORS;
     const PAGES = options.PAGES;
     const showPage = options.showPage instanceof Function ? options.showPage : () => {};
+    const SOCKET_EVENTS = options.SOCKET_EVENTS;
 
     const server = options.server;
+    const socket = options.socket;
 
     /**
      * Заполняем выпадашку с группами
@@ -72,6 +74,10 @@ function Login(options) {
      */
     function init() {
         eventHandler();
+        $('#testMessage').on('click', event => {
+            socket.emit(SOCKET_EVENTS.TEST_MESSAGE, {});
+        });
+        socket.on(SOCKET_EVENTS.TEST_MESSAGE, data => console.log(data));
     }
     init();
 }

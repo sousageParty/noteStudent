@@ -40,9 +40,10 @@ $(document).ready(function () {
         }
     }
 
-    const server = new Server({...SETTINGS});
+    const server = new Server({ ...SETTINGS });
+    const socket = new Socket(SETTINGS.SOCKET_EVENTS);
     new Registration({ ...SETTINGS, $SELECTORS, showPage, server });
-    new Login({ ...SETTINGS, $SELECTORS, showPage, server });
+    new Login({ ...SETTINGS, $SELECTORS, showPage, server, socket });
     new MainManager({ ...SETTINGS, $SELECTORS, showPage, server });
 
     showPage(PAGES.LOGIN);

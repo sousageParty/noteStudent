@@ -14,6 +14,7 @@ class Mediator:
 
     def __del__(self):
         self.events.clear()
+        self.triggers.clear()
 
     # подписка на события
     def subscribe(self, name, func):

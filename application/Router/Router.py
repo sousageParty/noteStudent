@@ -1,5 +1,5 @@
 from .ApiAnswer import ApiAnswer
-
+from .WebSocket import WebSocket
 
 # Класс для описасния API методов и их обработчиков
 class Router:
@@ -16,7 +16,7 @@ class Router:
             return False
         return False
 
-    def __init__(self, app, web, mediator):
+    def __init__(self, app, web, mediator, webSocket):
         self.web = web
         self.api = ApiAnswer()
         self.mediator = mediator
@@ -24,6 +24,7 @@ class Router:
         self.TRIGGERS = mediator.getTriggers()
         routes = [
             ('*', '/', self.staticHandler),
+            ('GET', '/ws', webSocket.get),
             # О юзерах
             ('GET', "/api/user", self.getUsers),  # Получить всех юзеров
             ('GET', "/api/user/{login}", self.getUser),  # Получить юзера по ИД
