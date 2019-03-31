@@ -27,7 +27,8 @@ class Router:
             ('GET', '/ws', webSocket.get),
             # О юзерах
             ('GET', "/api/user", self.getUsers),  # Получить всех юзеров
-            ('GET', "/api/user/{login}", self.getUser),  # Получить юзера по ИД
+            ('GET', "/api/user/{login}", self.getUser),  # Получить юзера по логину
+            ('GET', "/api/user/type/{token}", self.getUserTypeByToken),  # Получить тип юзера по токену
             ('POST', "/api/user", self.register),  # Добавить юзера и студента одновременно
             ('GET', "/api/user/login/{login}/{password}/{rnd}", self.login),  # Логин юзера
             ('GET', "/api/user/logout/{token}", self.logout),  # Выход юзера
@@ -46,13 +47,21 @@ class Router:
     def staticHandler(self, request):
         return self.web.FileResponse('./public/index.html')
 
+    def getUserTypeByToken(self, request):
+        token = request.match_info.get('token')
+        result = self.mediator.get(self.TRIGGERS['GET_USER_TYPE_BY_TOKEN'], {'token': token})
+        if result:
+            return self.web.json_response(self.api.answer(result))
+        return self.web.json_response(self.api.error(404))
+
     def getUsers(self, request):
         return self.web.json_response(self.api.answer(self.mediator.get(self.TRIGGERS['GET_USERS'])))
 
     def getUser(self, request):
-        login = request.match_info.get('login')
-        result = self.mediator.get(self.TRIGGERS['GET_USER'], {'login': login})
+        token = request.match_info.get('token')
+        result = self.mediator.get(self.TRIGGERS['GET_USER'], {'token': token})
         if result:
+            result['password'] = ''
             return self.web.json_response(self.api.answer(result))
         return self.web.json_response(self.api.error(404))
 

@@ -25,13 +25,13 @@ $(document).ready(function () {
         $SELECTORS.loginRegContainer.hide();
         switch (page) {
             case PAGES.LOGIN:
-                $SELECTORS.loginRegContainer.show();
-                $SELECTORS.loginBlock.show();
+                $SELECTORS.loginRegContainer.css('display', 'flex');
+                $SELECTORS.loginBlock.css('display', 'flex');
                 $SELECTORS.toRegBtn.show();
                 break;
             case PAGES.REGISTRATION:
-                $SELECTORS.loginRegContainer.show();
-                $SELECTORS.regBlock.show();
+                $SELECTORS.loginRegContainer.css('display', 'flex');
+                $SELECTORS.regBlock.css('display', 'flex');
                 $SELECTORS.toLoginBtn.show();
                 break;
             case PAGES.MAIN:
@@ -40,11 +40,12 @@ $(document).ready(function () {
         }
     }
 
+    const mediator = new Mediator({ ...SETTINGS.MEDIATOR });
     const server = new Server({ ...SETTINGS });
     const socket = new Socket(SETTINGS.SOCKET_EVENTS);
     new Registration({ ...SETTINGS, $SELECTORS, showPage, server });
-    new Login({ ...SETTINGS, $SELECTORS, showPage, server, socket });
-    new MainManager({ ...SETTINGS, $SELECTORS, showPage, server });
+    new Login({ ...SETTINGS, $SELECTORS, showPage, server, socket, mediator });
+    new MainManager({ ...SETTINGS, $SELECTORS, showPage, server, socket, mediator });
 
     showPage(PAGES.LOGIN);
 });

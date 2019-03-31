@@ -86,4 +86,25 @@ class Server {
         data.url = 'group/codes';
         return this.executeGet(data);
     }
+
+    /**
+     * Метод, возвращающий тип пользователя по токену пользователя
+     * @param data данные необходимые для отправки запроса
+     * @returns {Promise<any>} результат запроса
+     */
+    getUserType(data = {}) {
+        data.url = `user/type/${this.token}`;
+        return this.executeGet(data);
+    }
+
+    /**
+     * Получить студентов на паре
+     * @param data данные необходимые для отправки запроса
+     * @returns {Promise<any>}
+     */
+    getStudentsOnLesson(data = {}) {
+        data.url = `student/getOnLesson/${this.token}/${data.date}/${data.lessonNum}`;
+        return this.executeGet(data);
+    }
+
 }

@@ -40,7 +40,6 @@ class WebSocket:
         if idMessage in self.SOCKET_EVENTS.keys():
             raise KeyError("Handler for this message already exists!!!")
         self.SOCKET_EVENTS[idMessage] = cb
-        print(self.SOCKET_EVENTS)
 
     # Послать сообщение всем клиентам или одному, кто подключен к серверу.
     async def emit(self, idMessage, data=None, idSocket=None):

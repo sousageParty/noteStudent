@@ -19,11 +19,9 @@ UserManager({'mediator': mediator, 'db': db, 'socket': socket, 'SOCKET_EVENTS': 
 StudentManager({'mediator': mediator, 'db': db, 'socket': socket, 'SOCKET_EVENTS': SETTINGS['SOCKET_EVENTS']})
 GroupManager({'mediator': mediator, 'db': db, 'socket': socket, 'SOCKET_EVENTS': SETTINGS['SOCKET_EVENTS']})
 
-# Users in DB (login <=> password):
-# vasya <=> 123
-# petya <=> 321
-# ivan <=> 213
-# katya <=> 1234
+# Users in DB (login <=> password (type)):
+# vasya <=> 123 (0)
+# marat <=> 123 (2)
 
 app = web.Application()
 Router(app, web, mediator, socket)

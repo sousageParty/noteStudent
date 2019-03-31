@@ -19,6 +19,7 @@ SETTINGS = {
             'GET_USERS': 'GET_USERS',
             'GET_USER': 'GET_USER',
             'SET_USER': 'SET_USER',
+            'GET_USER_TYPE_BY_TOKEN': 'GET_USER_TYPE_BY_TOKEN',
             'LOGIN': 'LOGIN',
             'LOGOUT': 'LOGOUT',
             # О студентах

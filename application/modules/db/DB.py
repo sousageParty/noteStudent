@@ -110,8 +110,13 @@ class DB:
                   "JOIN user ON (user.id = student_on_lessons.students_id) " \
                   "JOIN student ON (student.user_id = user.id) " \
                   "JOIN 'group' ON ('group'.id = student.group_id) " \
-                "WHERE student_on_lessons.date = date('now', 'localtime') " \
+                "WHERE student_on_lessons.date = :date " \
                   "AND student_on_lessons.admin_id = :adminId " \
                   "AND student_on_lessons.lesson_time_id = :lessonId;"
         self.c.execute(query, { "adminId": adminId, "date": date, 'lessonId': lessonId })
         return self.c.fetchall()
+
+    def getStudentType(self, id):
+        query = "SELECT type FROM student WHERE user_id = :id"
+        self.c.execute(query, {'id': id})
+        return self.c.fetchone()

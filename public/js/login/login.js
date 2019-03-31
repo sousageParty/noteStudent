@@ -12,6 +12,10 @@ function Login(options) {
     const showPage = options.showPage instanceof Function ? options.showPage : () => {};
     const SOCKET_EVENTS = options.SOCKET_EVENTS;
 
+    const mediator = options.mediator;
+    const EVENTS = mediator.EVENTS;
+    const TRIGGERS = mediator.TRIGGERS;
+
     const server = options.server;
     const socket = options.socket;
 
@@ -45,6 +49,7 @@ function Login(options) {
                 loginField.val('');
                 passwordField.val('');
                 showPage(PAGES.MAIN);
+                mediator.call(EVENTS.ADMIN_LOGIN);
                 return;
             }
             $('.auth-reg-block__error-login-js').empty().append(result.error);

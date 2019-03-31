@@ -14,6 +14,16 @@ const SETTINGS = {
     SOCKET_EVENTS: {
         START_CONNECTION: 'START_CONNECTION',
         TEST_MESSAGE: 'TEST_MESSAGE'
+    },
+
+    MEDIATOR: {
+        EVENTS: {
+            ADMIN_LOGIN: 'ADMIN_LOGIN',
+            FILL_ADMIN_TABLE: 'FILL_ADMIN_TABLE',
+        },
+        TRIGGERS: {
+
+        }
     }
 
 };
