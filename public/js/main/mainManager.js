@@ -11,7 +11,7 @@ function MainManager(options) {
     const showPage = options.showPage instanceof Function ? options.showPage : () => {};
 
     const server = options.server;
-    const socket = options.socket;
+    let socket = null;
 
     const mediator = options.mediator;
     const EVENTS = mediator.EVENTS;
@@ -76,9 +76,19 @@ function MainManager(options) {
         }
     }
 
+
+
     function init() {
         mediator.subscribe(EVENTS.ADMIN_LOGIN, isAdminLogin);
-        mediator.subscribe(EVENTS.FILL_ADMIN_TABLE, fillAdminTable)
+        mediator.subscribe(EVENTS.FILL_ADMIN_TABLE, fillAdminTable);
+        mediator.set(TRIGGERS.SET_SOCKET, s => {
+            if (socket === null) {
+                socket = s;
+                new Chat({...SETTINGS, socket});
+            }
+        });
     }
     init();
 }
+
+

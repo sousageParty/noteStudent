@@ -6,6 +6,7 @@ class User:
     password = None
     token = None
     name = None
+    socketId = None
 
     def __init__(self, params):
         self.id = int(params['id'])
@@ -15,8 +16,8 @@ class User:
         self.token = str(params['token'])
 
     def __str__(self):
-        return {'id': self.id, 'login': self.login, 'password': self.password, 'token': self.token, 'name': self.name}
+        return {'id': self.id, 'login': self.login, 'password': self.password, 'token': self.token, 'name': self.name, 'socketId': self.socketId}
 
     # Сериализация класса в объект
     def get(self):
-        return {'id': self.id, 'login': self.login, 'password': self.password, 'token': self.token, 'name': self.name}
+        return {'id': self.id, 'login': self.login, 'password': self.password, 'token': self.token, 'name': self.name, 'socketId': self.socketId}

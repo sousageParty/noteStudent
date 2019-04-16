@@ -13,7 +13,7 @@ class Socket {
                     eval('(function () { return ' + event.data + ' })()') :
                     null);
 
-        this.socket.onopen = () => this.emit(this.SOCKET_EVENTS.START_CONNECTION, { id: this.id });
+        this.socket.onopen = () => this.emit(this.SOCKET_EVENTS.START_CONNECTION, { id: this.id , token: localStorage.getItem('token')});
         this.socket.onclose = () => this.initSocket();
         this.socket.onerror = error => console.log(error);
     }
@@ -37,7 +37,9 @@ class Socket {
 
     // получать сообщение с сервера
     getMessage(message) {
-        if (message && message.id_message) {
+        if (message &&
+            message.id_message &&
+            this.messages[message.id_message] instanceof Function) {
             this.messages[message.id_message](message);
         }
     }
@@ -53,5 +55,4 @@ class Socket {
             this.socket = new WebSocket('wss://' + window.location.host + '/ws');
         }
     }
-
 }

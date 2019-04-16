@@ -12,12 +12,16 @@ class UserManager(BaseManager):
 
     def __init__(self, params):
         super().__init__(params)
+        self.mediator.set(self.TRIGGERS['GET_ACTIVE_USERS'], self.getActiveUsers)
         self.mediator.set(self.TRIGGERS['GET_USER'], self.getUser)
         self.mediator.set(self.TRIGGERS['GET_USER_TYPE_BY_TOKEN'], self.getUserTypeByToken)
         self.mediator.set(self.TRIGGERS['GET_USERS'], self.getUsers)
         self.mediator.set(self.TRIGGERS['SET_USER'], self.setUser)
         self.mediator.set(self.TRIGGERS['LOGIN'], self.login)
         self.mediator.set(self.TRIGGERS['LOGOUT'], self.logout)
+
+    def getActiveUsers(self, data):
+        return self.users
 
     def getUserTypeByToken(self, data):
         user = self.db.getUserByToken(data['token'])

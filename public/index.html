@@ -24,13 +24,28 @@
     <!--main-->
     <script src="js/main/ui.js"></script>
     <script src="js/main/mainManager.js"></script>
+    <script src="js/chat/chat.js"></script>
     <script src="js/main.js"></script>
 </head>
 <body>
-    <div class="main-block">
-        <header class="main-block__header">
-            <button class="main-block__logout-button main-block__logout-button-js">Выйти</button>
-        </header>
+
+<div class="main-container">
+    <header class="main-container__header">
+        <h1 class="main-container__title">noteStudent</h1>
+        <button class="main-container__logout-button main-block__logout-button-js">Выйти</button>
+    </header>
+    <section class="main-container__content">
+        <div class="chat-block">
+            <div id="chat"></div>
+            <div class="chat-block__interact">
+                <input class="chat-block__input" id="message" type ="text" placeholder="Введите текст">
+                <button class="chat-block__button" id="sendMessage">Отправить</button>
+            </div>
+
+        </div>
+
+        <div class="main-block">
+
         <section class="main-block__content">
             <div class="main-block__content-admin">
                 <div class="main-block__input-block">
@@ -67,10 +82,14 @@
             </div>
         </section>
     </div>
+    </section>
+
+</div>
+
+
 
     <div class="auth-reg-block">
         <div class="auth-reg-block__auth">
-            <button id="testMessage">TEST</button>
             <h1 class="auth-reg-block__title">Авторизация</h1>
             <div class="auth-reg-block__input-block">
                 <input class="auth-reg-block__input auth-reg-block__input-login-js" type="text" placeholder="Введите ваш логин">

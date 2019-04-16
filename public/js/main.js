@@ -9,7 +9,8 @@ $(document).ready(function () {
     //Константа со всеми базовыми селекторами
     const $SELECTORS = {
         'loginBlock': $('.auth-reg-block__auth'), 'regBlock': $('.auth-reg-block__reg'), 'mainBlock': $('.main-block'),
-        'toLoginBtn': $('#go-to-auth-button'), 'toRegBtn': $('#go-to-reg-button'), 'loginRegContainer': $('.auth-reg-block')
+        'toLoginBtn': $('#go-to-auth-button'), 'toRegBtn': $('#go-to-reg-button'), 'loginRegContainer': $('.auth-reg-block'),
+        'chatBlock': $('.chat-block'), 'mainContainer': $('.main-container')
     };
 
     /**
@@ -17,12 +18,12 @@ $(document).ready(function () {
      * @param page страница, которую нужно показать
      */
     function showPage(page) {
-        $SELECTORS.mainBlock.hide();
         $SELECTORS.regBlock.hide();
         $SELECTORS.loginBlock.hide();
         $SELECTORS.toRegBtn.hide();
         $SELECTORS.toLoginBtn.hide();
         $SELECTORS.loginRegContainer.hide();
+        $SELECTORS.mainContainer.hide();
         switch (page) {
             case PAGES.LOGIN:
                 $SELECTORS.loginRegContainer.css('display', 'flex');
@@ -35,17 +36,18 @@ $(document).ready(function () {
                 $SELECTORS.toLoginBtn.show();
                 break;
             case PAGES.MAIN:
-                $SELECTORS.mainBlock.show();
+                        $SELECTORS.mainContainer.show();
+
                 break;
         }
     }
 
     const mediator = new Mediator({ ...SETTINGS.MEDIATOR });
     const server = new Server({ ...SETTINGS });
-    const socket = new Socket(SETTINGS.SOCKET_EVENTS);
+
     new Registration({ ...SETTINGS, $SELECTORS, showPage, server });
-    new Login({ ...SETTINGS, $SELECTORS, showPage, server, socket, mediator });
-    new MainManager({ ...SETTINGS, $SELECTORS, showPage, server, socket, mediator });
+    new Login({ ...SETTINGS, $SELECTORS, showPage, server, mediator });
+    new MainManager({ ...SETTINGS, $SELECTORS, showPage, server, mediator });
 
     showPage(PAGES.LOGIN);
 });

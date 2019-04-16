@@ -26,7 +26,7 @@ class Server {
                 method: 'GET',
                 dataType: 'json',
                 success: data => resolve(data)
-            })
+            });
         });
     }
 
@@ -43,7 +43,7 @@ class Server {
                 method: 'POST',
                 dataType: 'json',
                 success: data => resolve(data)
-            })
+            });
         });
     }
 
@@ -106,5 +106,4 @@ class Server {
         data.url = `student/getOnLesson/${this.token}/${data.date}/${data.lessonNum}`;
         return this.executeGet(data);
     }
-
 }

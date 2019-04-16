@@ -54,5 +54,4 @@ function UI(options) {
     }
     init()
 
-
 }

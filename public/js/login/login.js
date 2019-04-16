@@ -5,6 +5,8 @@
 
 function Login(options) {
 
+
+
     options = options instanceof Object ? options : {};
 
     const $SELECTORS = options.$SELECTORS;
@@ -48,6 +50,8 @@ function Login(options) {
                 server.token = result.data;
                 loginField.val('');
                 passwordField.val('');
+                localStorage.setItem('token', server.token);
+                mediator.get(TRIGGERS.SET_SOCKET, new Socket(SETTINGS.SOCKET_EVENTS));
                 showPage(PAGES.MAIN);
                 mediator.call(EVENTS.ADMIN_LOGIN);
                 return;
@@ -57,6 +61,8 @@ function Login(options) {
         }
         $('.auth-reg-block__error-login-js').empty().append("Не введен логин и(или) пароль!");
     }
+
+
 
     /**
      * Функция-обработчик всех событий, касающихся Login-а
@@ -79,10 +85,8 @@ function Login(options) {
      */
     function init() {
         eventHandler();
-        $('#testMessage').on('click', event => {
-            socket.emit(SOCKET_EVENTS.TEST_MESSAGE, {});
-        });
-        socket.on(SOCKET_EVENTS.TEST_MESSAGE, data => console.log(data));
     }
     init();
 }
+
+

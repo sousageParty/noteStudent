@@ -17,6 +17,7 @@ SETTINGS = {
         'TRIGGERS': {
             # О юзерах
             'GET_USERS': 'GET_USERS',
+            'GET_ACTIVE_USERS': 'GET_ACTIVE_USERS',
             'GET_USER': 'GET_USER',
             'SET_USER': 'SET_USER',
             'GET_USER_TYPE_BY_TOKEN': 'GET_USER_TYPE_BY_TOKEN',
@@ -33,6 +34,7 @@ SETTINGS = {
     # О сокетах
     'SOCKET_EVENTS': {
         'START_CONNECTION': 'START_CONNECTION',
-        'TEST_MESSAGE': 'TEST_MESSAGE'
+        'SEND_MESSAGE': 'SEND_MESSAGE',
+        'SEND_MESSAGE_TO_ALL': 'SEND_MESSAGE_TO_ALL',
     }
 }
