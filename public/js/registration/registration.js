@@ -64,6 +64,7 @@ function Registration(options) {
      */
     function eventHandler() {
         $('.auth-reg-block__reg__button-js').on('click', registration);
+        $('.auth-reg-block__error-reg-js').empty();
         $SELECTORS.toLoginBtn.on('click', e => showPage(PAGES.LOGIN));
     }
 

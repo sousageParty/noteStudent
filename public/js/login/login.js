@@ -76,6 +76,7 @@ function Login(options) {
         $SELECTORS.toRegBtn.on('click', async e => {
             const result = await server.getGroupsCodes();
             fillGroups(result.data);
+            $('.auth-reg-block__error-login-js').empty();
             showPage(PAGES.REGISTRATION)
         });
     }

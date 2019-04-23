@@ -13,6 +13,7 @@ SETTINGS = {
 
     'MEDIATOR': {
         'EVENTS': {
+            'GET_STUDENTS_LIST': 'GET_STUDENTS_LIST'  # отправить старосте список студентов на паре
         },
         'TRIGGERS': {
             # О юзерах

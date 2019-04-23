@@ -7,6 +7,7 @@ class WSManager(BaseManager):
         super().__init__(options)
         self.socket.on(self.SOCKET_EVENTS['START_CONNECTION'], self.connect)
         self.socket.on(self.SOCKET_EVENTS['SEND_MESSAGE'], self.getMessage)
+        self.mediator.subscribe(self.EVENTS['GET_STUDENTS_LIST'], self.getStudentsList)
 
     def getUser(self, token):
         users = self.mediator.get(self.TRIGGERS['GET_ACTIVE_USERS'])
@@ -32,3 +33,12 @@ class WSManager(BaseManager):
     async def getMessage(self, data, ws):
         user = self.getUserBySocketId(data['id'])
         await self.socket.emit(self.SOCKET_EVENTS['SEND_MESSAGE_TO_ALL'], {'text': data['text'], 'id': data['id'], 'name': user.name})
+
+    def getStudentsList(self, data):
+        admin = data['admin']
+        print(admin.socketId)
+        students = data['students']
+        print('students')
+        self.socket.emit(self.SOCKET_EVENTS['GET_STUDENTS_LIST'], {'students': students}, admin.socketId)
+        print('sadg')
+        return True
