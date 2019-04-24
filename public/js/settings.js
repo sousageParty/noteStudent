@@ -23,9 +23,9 @@ const SETTINGS = {
         EVENTS: {
             ADMIN_LOGIN: 'ADMIN_LOGIN',
             FILL_ADMIN_TABLE: 'FILL_ADMIN_TABLE',
+            SET_SOCKET: 'SET_SOCKET',
         },
         TRIGGERS: {
-            SET_SOCKET: 'SET_SOCKET'
         }
     }
 

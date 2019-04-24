@@ -51,12 +51,13 @@ function Login(options) {
                 loginField.val('');
                 passwordField.val('');
                 localStorage.setItem('token', server.token);
-                mediator.get(TRIGGERS.SET_SOCKET, new Socket(SETTINGS.SOCKET_EVENTS));
+                $('.auth-reg-block__error-login-js').empty();
                 showPage(PAGES.MAIN);
+                mediator.call(EVENTS.SET_SOCKET, new Socket(SETTINGS.SOCKET_EVENTS));
                 mediator.call(EVENTS.ADMIN_LOGIN);
                 return;
             }
-            $('.auth-reg-block__error-login-js').empty().append(result.error);
+            $('.auth-reg-block__error-login-js').empty().append("Неверные логин и(или) пароль!");
             return;
         }
         $('.auth-reg-block__error-login-js').empty().append("Не введен логин и(или) пароль!");

@@ -17,11 +17,16 @@ function MainManager(options) {
     const EVENTS = mediator.EVENTS;
     const TRIGGERS = mediator.TRIGGERS;
 
-    const ui = new UI(options);
+    const ui = new UI({...options, ...{socket}});
 
     function showAdminInterface() {
         $('.main-block__content-admin').css('display', 'flex');
-        ui.adminEventHandler();
+        ui.adminEventHandler(true);
+    }
+
+    function hideAdminInterface() {
+        $('.main-block__content-admin').hide();
+        ui.adminEventHandler(false);
     }
 
     /**
@@ -34,6 +39,8 @@ function MainManager(options) {
             let userType = answer.data.type;
             if (userType !== 0) {
                 showAdminInterface();
+            } else {
+                hideAdminInterface();
             }
         }
     }
@@ -76,12 +83,10 @@ function MainManager(options) {
         }
     }
 
-
-
     function init() {
         mediator.subscribe(EVENTS.ADMIN_LOGIN, isAdminLogin);
         mediator.subscribe(EVENTS.FILL_ADMIN_TABLE, fillAdminTable);
-        mediator.set(TRIGGERS.SET_SOCKET, s => {
+        mediator.subscribe(EVENTS.SET_SOCKET, s => {
             if (socket === null) {
                 socket = s;
                 new Chat({...SETTINGS, socket});

@@ -35,25 +35,30 @@ function Registration(options) {
         const password1 = $(passwordField[0]).val();
         const password2 = $(passwordField[1]).val();
         const group = $('.auth-reg-block__select-js').val();
-        if (login && password1 && password2 && longName && longName.length >= 2 && group) {
-            if (password1 === password2) {
-                const password = md5(login + password1);
-                const surname = longName[0];
-                const firstname = longName[1];
-                const thirdname = longName[2];
-                const name = [surname, firstname, thirdname].join(" "); 
-                const result = await server.registration({ login, password, group, name, type: 0 });
-                if (result.result === "ok") {
-                    loginField.val('');
-                    nameField.val('');
-                    passwordField.val('');
-                    showPage(PAGES.LOGIN);
+        if (login && password1 && password2 && longName && group) {
+            if (longName.length >= 2) {
+                if (password1 === password2) {
+                    const password = md5(login + password1);
+                    const surname = longName[0];
+                    const firstname = longName[1];
+                    const thirdname = longName[2];
+                    const name = [surname, firstname, thirdname].join(" ");
+                    const result = await server.registration({ login, password, group, name, type: 0 });
+                    if (result.result === "ok") {
+                        loginField.val('');
+                        nameField.val('');
+                        passwordField.val('');
+                        $('.auth-reg-block__error-reg-js').empty();
+                        showPage(PAGES.LOGIN);
+                        return;
+                    }
+                    $('.auth-reg-block__error-reg-js').empty().append("Пользователь с таким логином уже существует");
                     return;
                 }
-                $('.auth-reg-block__error-reg-js').empty().append("Пользователь с таким логином уже существует");
+                $('.auth-reg-block__error-reg-js').empty().append("Пароли не совпадают");
                 return;
             }
-            $('.auth-reg-block__error-reg-js').empty().append("Пароли не совпадают");
+            $('.auth-reg-block__error-reg-js').empty().append("ФИО должно состоять минимум из двух слов");
             return;
         }
         $('.auth-reg-block__error-reg-js').empty().append("Введены не все данные");
@@ -64,8 +69,10 @@ function Registration(options) {
      */
     function eventHandler() {
         $('.auth-reg-block__reg__button-js').on('click', registration);
-        $('.auth-reg-block__error-reg-js').empty();
-        $SELECTORS.toLoginBtn.on('click', e => showPage(PAGES.LOGIN));
+        $SELECTORS.toLoginBtn.on('click', e => {
+            $('.auth-reg-block__error-reg-js').empty();
+            showPage(PAGES.LOGIN);
+        });
     }
 
     /**

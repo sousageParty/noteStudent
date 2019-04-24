@@ -7,8 +7,8 @@ from application.modules.managers.UserManager import UserManager
 from application.modules.managers.WSManager import WSManager
 from application.modules.managers.StudentManager import StudentManager
 from application.modules.managers.GroupManager import GroupManager
-from application.router.Router import Router
-from application.router.WebSocket import WebSocket
+from application.Router.Router import Router
+from application.Router.WebSocket import WebSocket
 
 mediator = Mediator(SETTINGS['MEDIATOR'])
 socket = WebSocket(web, mediator)

@@ -47,14 +47,15 @@ class UserManager(BaseManager):
     # Вход в систему. data = {login, password, rnd}
     def login(self, data):
         user = self.getUser(data)
-        passHash = md5((user['password'] + str(data['rnd'])).encode('utf-8')).hexdigest()
-        if user and data['password'] == passHash:
-            rnd = random.random()
-            token = md5((str(rnd) + user['login'] + user['password']).encode('utf-8')).hexdigest()
-            self.db.setToken(user['id'], token)
-            user.update({'token': token})
-            self.users.update({token: User(user)})
-            return token
+        if user:
+            passHash = md5((user['password'] + str(data['rnd'])).encode('utf-8')).hexdigest()
+            if user and data['password'] == passHash:
+                rnd = random.random()
+                token = md5((str(rnd) + user['login'] + user['password']).encode('utf-8')).hexdigest()
+                self.db.setToken(user['id'], token)
+                user.update({'token': token})
+                self.users.update({token: User(user)})
+                return token
         return False
 
     # Выход из системы. data = {token}
