@@ -45,6 +45,7 @@ class WebSocket:
     async def emit(self, idMessage, data=None, idSocket=None):
         data['id_message'] = idMessage
         if idSocket:
+            await self.wss[idSocket].send_str(str(data))
             return None
         else:
             for key in self.wss:

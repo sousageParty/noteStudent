@@ -1,5 +1,6 @@
 import threading
 from datetime import datetime
+import asyncio
 from ..struct.Student import Student
 from .BaseManager import BaseManager
 
@@ -24,19 +25,16 @@ class StudentManager(BaseManager):
                 student.socketId = users[u].socketId
                 return
 
-    def sendStudentsList(self, admin, students):
-        self.mediator.call(self.EVENTS['GET_STUDENTS_LIST'], {
-            'admin': admin,
-            'students': students
-        })
+    async def sendStudentsList(self, admin, students):
+        await self.socket.emit(self.SOCKET_EVENTS['GET_STUDENTS_LIST'], {'students': students}, admin.socketId)
 
     # Отметить студента data = { tokenAdmin, tokenStudent }
     def noteStudent(self, data):
         tokenAdmin = data['tokenAdmin']
         tokenStudent = data['tokenStudent']
         admin = Student(self.db.getStudentByToken(tokenAdmin))
-        self.normalizeStudent(admin)
         if admin and (admin.type == 1 or admin.type == 2):
+            self.normalizeStudent(admin)
             student = Student(self.db.getStudentByToken(tokenStudent))
             self.normalizeStudent(student)
             if student and (student.groupId == admin.groupId):
@@ -52,8 +50,7 @@ class StudentManager(BaseManager):
                             lesson['id']
                         )
                         # послать обновленный список студентов старосте/админу
-                        thread = threading.Thread(target=self.sendStudentsList, args=(admin, students))
-                        thread.start()
+                        asyncio.wait(asyncio.ensure_future(self.sendStudentsList(admin, students)))
                         return True
         return False
 

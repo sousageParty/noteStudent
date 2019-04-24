@@ -34,11 +34,8 @@ class WSManager(BaseManager):
         user = self.getUserBySocketId(data['id'])
         await self.socket.emit(self.SOCKET_EVENTS['SEND_MESSAGE_TO_ALL'], {'text': data['text'], 'id': data['id'], 'name': user.name})
 
-    def getStudentsList(self, data):
+    async def getStudentsList(self, data):
         admin = data['admin']
-        print(admin.socketId)
         students = data['students']
-        print('students')
-        self.socket.emit(self.SOCKET_EVENTS['GET_STUDENTS_LIST'], {'students': students}, admin.socketId)
-        print('sadg')
+        await self.socket.emit(self.SOCKET_EVENTS['GET_STUDENTS_LIST'], {'students': students}, admin.socketId)
         return True

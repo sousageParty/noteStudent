@@ -69,7 +69,9 @@ function MainManager(options) {
      * Заполняем таблицу со студентами для админа
      * @param students
      */
-    function fillAdminTable(students) {
+    function fillAdminTable(_students) {
+        console.log(_students);
+        const students = _students instanceof Array ? _students : _students.students;
         const tableBody = $('.main-block__table-body-js');
         tableBody.empty();
         let tr;
@@ -90,6 +92,7 @@ function MainManager(options) {
             if (socket === null) {
                 socket = s;
                 new Chat({...SETTINGS, socket});
+                socket.on(SETTINGS.SOCKET_EVENTS.GET_STUDENTS_LIST, fillAdminTable);
             }
         });
     }
