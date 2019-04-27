@@ -10,10 +10,12 @@ function UI(options) {
     const PAGES = options.PAGES;
     const showPage = options.showPage instanceof Function ? options.showPage : () => {};
     const server = options.server;
+    const socket = options.socket;
 
     const mediator = options.mediator;
     const EVENTS = mediator.EVENTS;
     const TRIGGERS = mediator.TRIGGERS;
+    const SOCKET_EVENTS = options.SOCKET_EVENTS;
 
     $SELECTORS.DATE = $('.main-block_date-js');
     $SELECTORS.SELECT = $('.main-block_select-js');
@@ -26,6 +28,7 @@ function UI(options) {
         $('.main-block__logout-button-js').off('click').on('click', async e => {
             const result = await server.logout();
             if (result.result === "ok") {
+                socket.emit(SOCKET_EVENTS.LOGOUT_CHAT);
                 showPage(PAGES.LOGIN);
             }
         });

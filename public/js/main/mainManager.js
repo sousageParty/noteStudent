@@ -17,7 +17,7 @@ function MainManager(options) {
     const EVENTS = mediator.EVENTS;
     const TRIGGERS = mediator.TRIGGERS;
 
-    const ui = new UI({...options, ...{socket}});
+    let ui = null;
 
     function showAdminInterface() {
         $('.main-block__content-admin').css('display', 'flex');
@@ -89,11 +89,11 @@ function MainManager(options) {
         mediator.subscribe(EVENTS.ADMIN_LOGIN, isAdminLogin);
         mediator.subscribe(EVENTS.FILL_ADMIN_TABLE, fillAdminTable);
         mediator.subscribe(EVENTS.SET_SOCKET, s => {
-            if (socket === null) {
-                socket = s;
-                new Chat({...SETTINGS, socket});
-                socket.on(SETTINGS.SOCKET_EVENTS.GET_STUDENTS_LIST, fillAdminTable);
-            }
+            socket = null;
+            socket = s;
+            new Chat({...SETTINGS, socket});
+            ui = new UI({...options, ...{socket}});
+            socket.on(SETTINGS.SOCKET_EVENTS.GET_STUDENTS_LIST, fillAdminTable);
         });
     }
     init();

@@ -7,12 +7,11 @@ class Socket {
 
     constructor(events) {
         this.SOCKET_EVENTS = events;
-        this.initSocket();
+        this.initSocket(true);
         this.socket.onmessage = event => this.getMessage(
                 (event && event.data) ?
                     eval('(function () { return ' + event.data + ' })()') :
                     null);
-
         this.socket.onopen = () => this.emit(this.SOCKET_EVENTS.START_CONNECTION, { id: this.id , token: localStorage.getItem('token')});
         this.socket.onclose = () => this.initSocket();
         this.socket.onerror = error => console.log(error);
@@ -44,15 +43,17 @@ class Socket {
         }
     }
 
-    initSocket() {
-        if (!localStorage.getItem('id_socket')) {
-            localStorage.setItem('id_socket', md5('Marat ' + Date.now()));
-        }
-        this.id = localStorage.getItem('id_socket');
-        try {
-            this.socket = new WebSocket('ws://' + window.location.host + '/ws');
-        } catch (e) {
-            this.socket = new WebSocket('wss://' + window.location.host + '/ws');
+    initSocket(flag = false) {
+        if (flag) {
+            if (!localStorage.getItem('id_socket')) {
+                localStorage.setItem('id_socket', md5('Marat ' + Date.now()));
+            }
+            this.id = localStorage.getItem('id_socket');
+            try {
+                this.socket = new WebSocket('ws://' + window.location.host + '/ws');
+            } catch (e) {
+                this.socket = new WebSocket('wss://' + window.location.host + '/ws');
+            }
         }
     }
 }

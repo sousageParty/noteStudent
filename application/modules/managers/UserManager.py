@@ -63,6 +63,5 @@ class UserManager(BaseManager):
         user = self.db.getUserByToken(data['token'])
         if user:
             self.db.setToken(user['id'])
-            self.users.pop(data['token'])
             return True
         return False

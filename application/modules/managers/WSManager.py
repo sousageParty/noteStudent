@@ -7,6 +7,7 @@ class WSManager(BaseManager):
         super().__init__(options)
         self.socket.on(self.SOCKET_EVENTS['START_CONNECTION'], self.connect)
         self.socket.on(self.SOCKET_EVENTS['SEND_MESSAGE'], self.getMessage)
+        self.socket.on(self.SOCKET_EVENTS['LOGOUT_CHAT'], self.logoutChat)
         self.mediator.subscribe(self.EVENTS['GET_STUDENTS_LIST'], self.getStudentsList)
 
     def getUser(self, token):
@@ -39,3 +40,11 @@ class WSManager(BaseManager):
         students = data['students']
         await self.socket.emit(self.SOCKET_EVENTS['GET_STUDENTS_LIST'], {'students': students}, admin.socketId)
         return True
+
+    async def logoutChat(self, data, ws):
+        users = self.mediator.get(self.TRIGGERS['GET_ACTIVE_USERS'])
+        user = self.getUserBySocketId(data['id'])
+        data['text'] = 'Пользователь ' + user.name + ' отключился!'
+        await self.socket.emit(self.SOCKET_EVENTS['LOGOUT_CHAT'],
+                               {'text': data['text'], 'id': data['id'], 'name': user.name})
+        users.pop(data['token'])
