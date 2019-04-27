@@ -17,6 +17,7 @@ const SETTINGS = {
         SEND_MESSAGE: 'SEND_MESSAGE', // сообщение с клиента на сервер
         SEND_MESSAGE_TO_ALL: 'SEND_MESSAGE_TO_ALL', // отправить сообщение с сервера всем клиентам
         GET_STUDENTS_LIST: 'GET_STUDENTS_LIST',
+        LOGOUT_CHAT: 'LOGOUT_CHAT', // выход из чата
     },
 
     MEDIATOR: {

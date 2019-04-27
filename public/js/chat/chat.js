@@ -7,8 +7,13 @@ class Chat {
     constructor(options) {
         this.socket = options.socket;
         this.EVENT = options.SOCKET_EVENTS;
+        this.chatBlock.empty();
         this.sendMessageBtn.off('click').on("click",() => this.sendMessage());
         this.socket.on(this.EVENT.SEND_MESSAGE_TO_ALL, data => this.getMessage(data));
+        this.socket.on(this.EVENT.LOGOUT_CHAT, data => {
+            this.getMessage(data);
+            this.socket.emit(this.EVENT.CLOSE)
+        });
     }
 
     sendMessage() {
@@ -20,9 +25,11 @@ class Chat {
     }
 
     getMessage(data) {
-        let text = document.createElement("p");
-        text.innerHTML = `<b>${data['name']}:</b> ${data['text']}`;
-        this.chatBlock.prepend(text);
+        if (data['text'] !== '') {
+            let text = document.createElement("p");
+            text.innerHTML = `<b>${data['name']}:</b> ${data['text']}`;
+            this.chatBlock.prepend(text);
+        }
     }
 }
 
