@@ -14,69 +14,46 @@ class TestAuthorization(unittest.TestCase):
         self.fieldPassword = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/input[2]").send_keys("123")
         self.buttonAuth = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/button").click()
         time.sleep(1)
-        assert "Пользователь Зарипов Марат Наилевич подключился!" in self.driver.page_source
-
-        # if self.driver.find_element_by_xpath("//*[@id='chat']")\
-        #         .text == "Пользователь Зарипов Марат Наилевич подключился!":
-        #     print('Авторизация Марата прошла успешно')
-        # else:
-        #     print('Авторизация Марата провалилась!!!')
+        self.msgAuth = self.driver.find_element_by_xpath("//*[@id='chat']/p")
+        self.assertEqual(self.msgAuth.text, "Зарипов Марат Наилевич: Пользователь Зарипов Марат Наилевич подключился!",
+                         "Сообщения об авторизации нет")
 
     def test_auth_vasya(self):
         self.fieldName = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/input[1]").send_keys("vasya")
         self.fieldPassword = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/input[2]").send_keys("123")
         self.buttonAuth = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/button").click()
         time.sleep(1)
-        assert "Пользователь Иванов Василий Петрович подключился!" in self.driver.page_source
-        # if self.driver.find_element_by_xpath("//*[@id='chat']")\
-        #         .text == "Пользователь Иванов Василий Петрович подключился!":
-        #     print('Авторизация Василий прошла успешно')
-        # else:
-        #     print('Авторизация Василия провалилась!!!')
+        self.msgAuth = self.driver.find_element_by_xpath("//*[@id='chat']/p")
+        self.assertEqual(self.msgAuth.text, "Иванов Василий Петрович: Пользователь Иванов Василий Петрович подключился!",
+                         "Сообщения об авторизации нет")
 
     def test_auth_incorrect_password(self):
         self.fieldName = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/input[1]").send_keys("vasya")
         self.fieldPassword = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/input[2]").send_keys("322")
         self.buttonAuth = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/button").click()
-        assert "Неверные логин и(или) пароль!" in self.driver.page_source
-        # if self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/p") \
-        #         .text == "Неверные логин и(или) пароль!":
-        #     print('Тест с некорректным паролем прошел')
-        # else:
-        #     print('Тест с некорректным паролем не прошел!!!')
+        self.errMsg = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/p")
+        self.assertEqual(self.errMsg.text, "Неверные логин и(или) пароль!", "Нет сообщения")
 
     def test_auth_incorrect_login(self):
         self.fieldName = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/input[1]").send_keys("vasya1")
         self.fieldPassword = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/input[2]").send_keys("123")
         self.buttonAuth = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/button").click()
-        assert "Неверные логин и(или) пароль!" in self.driver.page_source
-        # if self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/p") \
-        #         .text == "Неверные логин и(или) пароль!":
-        #     print('Тест с некорректным логином прошел')
-        # else:
-        #     print('Тест с некорректным логином не прошел!!!')
+        self.errMsg = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/p")
+        self.assertEqual(self.errMsg.text, "Неверные логин и(или) пароль!", "Нет сообщения")
 
     def test_auth_incorrect_login_and_password(self):
         self.fieldName = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/input[1]").send_keys("evgen")
         self.fieldPassword = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/input[2]").send_keys("322")
         self.buttonAuth = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/button").click()
-        assert "Неверные логин и(или) пароль!" in self.driver.page_source
-        # if self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/p") \
-        #         .text == "Неверные логин и(или) пароль!":
-        #     print('Тест с некорректным логином и паролем прошел')
-        # else:
-        #     print('Тест с некорректным логином и паролем не прошел!!!')
+        self.errMsg = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/p")
+        self.assertEqual(self.errMsg.text, "Неверные логин и(или) пароль!", "Нет сообщения")
 
     def test_auth_empty_fields(self):
         self.fieldName = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/input[1]").send_keys("")
         self.fieldPassword = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/input[2]").send_keys("")
         self.buttonAuth = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/button").click()
-        assert "Не введен логин и(или) пароль!" in self.driver.page_source
-        # if self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/p") \
-        #         .text == "Не введен логин и(или) пароль!":
-        #     print('Тест с пустыми полями прошел')
-        # else:
-        #     print('Тест с пустыми полями не прошел!!!')
+        self.errMsg = self.driver.find_element_by_xpath("/html/body/div[2]/div[1]/div/p")
+        self.assertEqual(self.errMsg.text, "Не введен логин и(или) пароль!", "Нет сообщения")
 
     def tearDown(self):
         self.driver.quit()
