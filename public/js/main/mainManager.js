@@ -22,6 +22,7 @@ function MainManager(options) {
 
     function showAdminInterface() {
         $('.main-block__content-admin').css('display', 'flex');
+        $('.main-block__content-user').hide();
         ui.adminEventHandler(true);
     }
 
@@ -29,6 +30,8 @@ function MainManager(options) {
         $('.main-block__content-admin').hide();
         ui.adminEventHandler(false);
     }
+
+
 
     /**
      * Проверяем админ ли залогинился

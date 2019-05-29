@@ -344,3 +344,38 @@ h1 {
     margin: 10px 0;
     text-align: center;
 }
+
+.camera-on-btn {
+    margin-left: 5px;
+}
+
+
+@media (max-width: 600px) {
+    .auth-reg-block {
+        width: auto;
+    }
+
+    .chat-block {
+        width: auto;
+        margin-right: 0;
+    }
+
+    .main-container__content {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    .main-block__table-of-students {
+        font-size: 8px;
+    }
+
+    .main-block__date {
+        width: auto;
+    }
+
+    .main-block__button {
+        width: auto;
+    }
+
+}
