@@ -77,6 +77,16 @@ class Server {
     }
 
     /**
+     * Медот отправки запроса смены пароля на сервер
+     * @param data данные с которыми нужно отправить запрос
+     * @returns {Promise<any>} результат запроса
+     */
+    updatePassword(data = {}) {
+        data.url = 'updatePassword';
+        return this.executePost(data);
+    }
+
+    /**
      * Метод отправки запроса getGroupsCodes на сервер
      * @param data данные с которыми нужно отправить запрос
      * @returns {Promise<any>} результат запроса

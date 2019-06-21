@@ -30,6 +30,7 @@ class Router:
             ('GET', "/api/user/{login}", self.getUser),  # Получить юзера по логину
             ('GET', "/api/user/type/{token}", self.getUserTypeByToken),  # Получить тип юзера по токену
             ('POST', "/api/user", self.register),  # Добавить юзера и студента одновременно
+            ('POST', "/api/updatePassword", self.updatePassword),
             ('GET', "/api/user/login/{login}/{password}/{rnd}", self.login),  # Логин юзера
             ('GET', "/api/user/logout/{token}", self.logout),  # Выход юзера
             # О группах
@@ -64,6 +65,16 @@ class Router:
             result['password'] = ''
             return self.web.json_response(self.api.answer(result))
         return self.web.json_response(self.api.error(404))
+
+
+
+    async def updatePassword(self, request):
+        data = await request.json()
+        result = self.mediator.get(self.TRIGGERS['UPDATE_PASSWORD'], data)
+        if result:
+            return self.web.json_response(self.api.answer(result))
+
+
 
     async def register(self, request):
         data = await request.json()

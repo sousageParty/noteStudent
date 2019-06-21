@@ -87,6 +87,15 @@ function Login(options) {
             $('.auth-reg-block__error-login-js').empty();
             showPage(PAGES.REGISTRATION)
         });
+        /**
+         * Вешаем событие на кнопку "перейти к смене пароля" и обрабатываем его
+         */
+        $SELECTORS.toUpdPasBtn.on('click', async e => {
+            const result = await server.getGroupsCodes();
+            fillGroups(result.data);
+            $('.auth-reg-block__error-login-js').empty();
+            showPage(PAGES.UPDATEPASSWORD)
+        });
     }
 
     /**

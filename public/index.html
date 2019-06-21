@@ -22,6 +22,7 @@
     <script src="js/server/socket.js"></script>
     <!--login/registration-->
     <script src="js/login/login.js"></script>
+    <script src="js/updatePassword/updatePassword.js"></script>
     <script src="js/registration/registration.js"></script>
     <!--main-->
     <script src="js/main/ui.js"></script>
@@ -114,7 +115,10 @@
                 <p class="auth-reg-block__error auth-reg-block__error-login-js"></p>
             </div>
             <button id="go-to-reg-button" class="auth-reg-block__transition">Еще не зарегистрированы? Сделайте это!</button>
+            <button id="go-to-upd-pas-button" class="auth-reg-block__transition">Сменить пароль</button>
         </div>
+
+
         <div class="auth-reg-block__reg">
             <h1 class="auth-reg-block__title">Регистрация</h1>
             <div class="auth-reg-block__input-block">
@@ -125,6 +129,19 @@
                 <input class="auth-reg-block__input auth-reg-block__reg__input-password-js" type="password" placeholder="Введите ваш пароль еще раз">
                 <button class="auth-reg-block__button auth-reg-block__reg__button-js">Зарегистрироваться</button>
                 <p class="auth-reg-block__error auth-reg-block__error-reg-js"></p>
+            </div>
+            <!--<button id="go-to-auth-button" class="auth-reg-block__transition">Вернуться к авторизации</button>-->
+        </div>
+
+        <div class="auth-reg-block__upd-pas">
+            <h1 class="auth-reg-block__title">Смена пароля</h1>
+            <div class="auth-reg-block__input-block">
+                <input class="auth-reg-block__input auth-reg-block__upd-pas__input-login-js" type="text" placeholder="Введите ваш логин">
+                <input class="auth-reg-block__input auth-reg-block__upd-pas__input-password-js" type="password" placeholder="Введите Ваш старый пароль">
+                <input class="auth-reg-block__input auth-reg-block__upd-pas__input-password-js" type="password" placeholder="Введите Ваш новый пароль">
+                <input class="auth-reg-block__input auth-reg-block__upd-pas__input-password-js" type="password" placeholder="Введите Ваш новый пароль еще раз">
+                <button class="auth-reg-block__button auth-reg-block__upd-pas__button-js">Сменить пароль</button>
+                <p class="auth-reg-block__error auth-reg-block__error-upd-pas-js"></p>
             </div>
             <button id="go-to-auth-button" class="auth-reg-block__transition">Вернуться к авторизации</button>
         </div>

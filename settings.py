@@ -21,6 +21,7 @@ SETTINGS = {
             'GET_ACTIVE_USERS': 'GET_ACTIVE_USERS',
             'GET_USER': 'GET_USER',
             'SET_USER': 'SET_USER',
+            'UPDATE_PASSWORD': 'UPDATE_PASSWORD',
             'GET_USER_TYPE_BY_TOKEN': 'GET_USER_TYPE_BY_TOKEN',
             'LOGIN': 'LOGIN',
             'LOGOUT': 'LOGOUT',

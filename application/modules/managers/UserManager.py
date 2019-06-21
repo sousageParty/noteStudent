@@ -17,8 +17,28 @@ class UserManager(BaseManager):
         self.mediator.set(self.TRIGGERS['GET_USER_TYPE_BY_TOKEN'], self.getUserTypeByToken)
         self.mediator.set(self.TRIGGERS['GET_USERS'], self.getUsers)
         self.mediator.set(self.TRIGGERS['SET_USER'], self.setUser)
+        self.mediator.set(self.TRIGGERS['UPDATE_PASSWORD'], self.updatePassword)
         self.mediator.set(self.TRIGGERS['LOGIN'], self.login)
         self.mediator.set(self.TRIGGERS['LOGOUT'], self.logout)
+
+    # Обновление пароля. data = {login, newPassword}
+    def updatePassword(self, data):
+        user = self.getUser(data)
+        if user:
+            if (data['newPassword']):
+                self.db.updatePassword(user['id'], data['newPassword'])
+                user.update({'password': data['newPassword']})
+                self.users.update({data['newPassword']: User(user)})
+                return data['newPassword']
+        return False
+
+    # Регистрация. data = {login, password, name}
+    def setUser(self, data):
+        result = self.db.addUser(data)
+        if result:
+            data['userId'] = result['id']
+            return self.mediator.get(self.TRIGGERS['SET_STUDENT'], data)
+        return False
 
     def getActiveUsers(self, data):
         return self.users
@@ -35,14 +55,6 @@ class UserManager(BaseManager):
 
     def getUsers(self, data):
         return self.db.getUsers()
-
-    # Регистрация. data = {login, password, name}
-    def setUser(self, data):
-        result = self.db.addUser(data)
-        if result:
-            data['userId'] = result['id']
-            return self.mediator.get(self.TRIGGERS['SET_STUDENT'], data)
-        return False
 
     # Вход в систему. data = {login, password, rnd}
     def login(self, data):

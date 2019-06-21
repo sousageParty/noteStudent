@@ -42,6 +42,11 @@ class DB:
         self.c.execute(query, {"token": token, "id": id})
         self.conn.commit()
 
+    def updatePassword (self, id, password):
+        query = 'UPDATE user SET password=:password WHERE id=:id'
+        self.c.execute(query, {"password": password, "id": id})
+        self.conn.commit()
+
     def addUser(self, data):
         query = 'INSERT INTO user (login, password, name) VALUES (:login, :password, :name)'
         try:
@@ -120,3 +125,4 @@ class DB:
         query = "SELECT type FROM student WHERE user_id = :id"
         self.c.execute(query, {'id': id})
         return self.c.fetchone()
+
