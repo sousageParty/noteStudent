@@ -63,6 +63,15 @@ h1 {
     height: 100%;
 }
 
+.auth-reg-block__upd-pas {
+    display: none;
+    /*display: flex;*/
+    flex-direction: column;
+    padding: 20px;
+    justify-content: space-between;
+    height: 100%;
+}
+
 .auth-reg-block__input {
     border: 1px solid #d5d5d5;
     height: 40px;

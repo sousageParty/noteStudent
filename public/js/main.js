@@ -8,8 +8,8 @@ $(document).ready(function () {
 
     //Константа со всеми базовыми селекторами
     const $SELECTORS = {
-        'loginBlock': $('.auth-reg-block__auth'), 'regBlock': $('.auth-reg-block__reg'), 'mainBlock': $('.main-block'),
-        'toLoginBtn': $('#go-to-auth-button'), 'toRegBtn': $('#go-to-reg-button'), 'loginRegContainer': $('.auth-reg-block'),
+        'loginBlock': $('.auth-reg-block__auth'), 'regBlock': $('.auth-reg-block__reg'), 'updPasBlock': $('.auth-reg-block__upd-pas'), 'mainBlock': $('.main-block'),
+        'toLoginBtn': $('#go-to-auth-button'), 'toRegBtn': $('#go-to-reg-button'), 'toUpdPasBtn': $('#go-to-upd-pas-button'),'loginRegContainer': $('.auth-reg-block'),
         'chatBlock': $('.chat-block'), 'mainContainer': $('.main-container')
     };
 
@@ -19,8 +19,10 @@ $(document).ready(function () {
      */
     function showPage(page) {
         $SELECTORS.regBlock.hide();
+        $SELECTORS.updPasBlock.hide();
         $SELECTORS.loginBlock.hide();
         $SELECTORS.toRegBtn.hide();
+        $SELECTORS.toUpdPasBtn.hide();
         $SELECTORS.toLoginBtn.hide();
         $SELECTORS.loginRegContainer.hide();
         $SELECTORS.mainContainer.hide();
@@ -29,10 +31,16 @@ $(document).ready(function () {
                 $SELECTORS.loginRegContainer.css('display', 'flex');
                 $SELECTORS.loginBlock.css('display', 'flex');
                 $SELECTORS.toRegBtn.show();
+                $SELECTORS.toUpdPasBtn.show();
                 break;
             case PAGES.REGISTRATION:
                 $SELECTORS.loginRegContainer.css('display', 'flex');
                 $SELECTORS.regBlock.css('display', 'flex');
+                $SELECTORS.toLoginBtn.show();
+                break;
+            case PAGES.UPDATEPASSWORD:
+                $SELECTORS.loginRegContainer.css('display', 'flex');
+                $SELECTORS.updPasBlock.css('display', 'flex');
                 $SELECTORS.toLoginBtn.show();
                 break;
             case PAGES.MAIN:
@@ -46,6 +54,7 @@ $(document).ready(function () {
     const server = new Server({ ...SETTINGS });
 
     new Registration({ ...SETTINGS, $SELECTORS, showPage, server });
+    new UpdatePassword({ ...SETTINGS, $SELECTORS, showPage, server, mediator });
     new Login({ ...SETTINGS, $SELECTORS, showPage, server, mediator });
     new MainManager({ ...SETTINGS, $SELECTORS, showPage, server, mediator });
 

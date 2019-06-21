@@ -6,6 +6,7 @@ const SETTINGS = {
     PAGES: {
         LOGIN: 'login',
         REGISTRATION: 'registration',
+        UPDATEPASSWORD: 'updatePassword',
         MAIN: 'main'
     },
 
